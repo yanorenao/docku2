@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Servicio de la aplicación Node.js
+  backend:
+    build: ./backend
+    container_name: mi_app_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=poli
+      - DB_PASSWORD=poli123
+      - DB_NAME=mi_app_db
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  # Servicio de la base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: mi_app_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: mi_app_db
+      MYSQL_USER: DB_USER
+      MYSQL_PASSWORD: DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: DB_PASSWORD
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/mysql
+    networks:
+      - app-network
+    command: 
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+# Definición de volúmenes
+volumes:
+  db-data:
+# Definición de deredes
+networks:
+  app-network:
+    driver: bridge

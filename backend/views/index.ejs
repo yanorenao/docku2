@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Productos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Agregar Nuevo Producto</h1>
+        <form action="/agregar-producto" method="POST" class="product-form">
+            <div class="form-group">
+                <label for="nombre_producto">Nombre del Producto:</label>
+                <input type="text" id="nombre_producto" name="nombre_producto" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock" required>
+            </div>
+            <div class="form-group">
+                <label for="fecha_lanzamiento">Fecha de Lanzamiento:</label>
+                <input type="date" id="fecha_lanzamiento" name="fecha_lanzamiento" required>
+            </div>
+             <div class="form-group">
+                <label for="usuario_id">Usuario Asignado:</label>
+                <select id="usuario_id" name="usuario_id" required>
+                    <% if (usuarios && usuarios.length > 0) { %>
+                        <% usuarios.forEach(function(usuario) { %>
+                            <option value="<%= usuario.id %>"><%= usuario.nombre_completo %></option>
+                        <% }); %>
+                    <% } else { %>
+                        <option value="">No hay usuarios disponibles</option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="form-group checkbox">
+                <input type="checkbox" id="es_disponible" name="es_disponible" value="true" checked>
+                <label for="es_disponible">¿Está disponible?</label>
+            </div>
+            <button type="submit" class="button">Guardar Producto</button>
+        </form>
+
+        <a href="/datos" class="button view-data-button">Ver todos los productos</a>
+    </div>
+</body>
+</html>

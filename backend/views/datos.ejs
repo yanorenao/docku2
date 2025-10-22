@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Productos en la Base de Datos</h1>
+        <a href="/" class="button">Agregar Nuevo Producto</a>
+        
+        <% if (productos && productos.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Disponible</th>
+                        <th>Lanzamiento</th>
+                        <th>Autor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% productos.forEach(function(producto) { %>
+                        <tr>
+                            <td><%= producto.id %></td>
+                            <td><%= producto.nombre_producto %></td>
+                            <td><%= producto.descripcion %></td>
+                            <td>$<%= parseFloat(producto.precio).toFixed(2) %></td>
+                            <td><%= producto.stock %></td>
+                            <td><%= producto.es_disponible ? 'Sí' : 'No' %></td>
+                            <td><%= producto.fecha_lanzamiento %></td>
+                            <td><%= producto.autor %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No hay productos para mostrar.</p>
+        <% } %>
+    </div>
+</body>
+</html>
